@@ -1,3 +1,7 @@
+/**
+ * Autori: Denis Eduard Tapu 147018, Ethan Carena 147017, Ilaria Fenos 142494
+ **/
+
 #include <iostream>
 #include <math.h> 
 #include <stdlib.h>
@@ -168,13 +172,13 @@ void testDistribuzione(){
 	
 	vector<double> media(lunghezzaStringa+1, 0),varianza(lunghezzaStringa+1, 0);
 	cout<<"\nTest in esecuzione...\n";
-	freqAssoluta = distribuzionePeriodo(lunghezzaStringa, dimCampione,tipoGeneratore, numLettere);
+	/*freqAssoluta = distribuzionePeriodo(lunghezzaStringa, dimCampione,tipoGeneratore, numLettere);
 	for (int i = 1; i < freqAssoluta.size(); i++)
 	{
 		media[i]+=freqAssoluta[i];
 		varianza[i]+=pow(freqAssoluta[i],2);
-	}
-	for (int i = 1; i < numTest; i++)
+	}*/
+	for (int j = 0; j < numTest; j++)
 	{
 		freqAssoluta=distribuzionePeriodo(lunghezzaStringa, dimCampione,tipoGeneratore, numLettere);
 		for (int i = 1; i < freqAssoluta.size(); i++)
@@ -186,7 +190,7 @@ void testDistribuzione(){
 	
 	
 	//cout<<"\nRisultati:\n"; //risultati in frequenze assolute
-	fout.open("distribution.csv");
+	fout.open("results.csv");
 	for (int i = 1; i < freqAssoluta.size() ; i++)
 	{	
 		media[i]=(double)media[i]/numTest;
@@ -258,15 +262,8 @@ void testTempi(){
 	
 	vector<double> mediaSmart(dimCampione, 0), mediaNaive(dimCampione, 0), varianzaSmart(dimCampione, 0), varianzaNaive(dimCampione, 0); 
 	cout<<"\nTest in esecuzione...\n";
-	durate=confrontoSingoloTempi(lunghezze, dimCampione, errMassimo, numLettere, tipoGeneratore);
-	for (int i = 0; i < dimCampione ; i++)
-	{
-		mediaSmart[i]+=durate[i*2];
-		mediaNaive[i]+=durate[(i*2)+1];
-		varianzaSmart[i]+=pow(durate[i*2],2);
-		varianzaNaive[i]+=pow(durate[(i*2)+1],2);
-	}
-	for (int i = 1; i < numTest; i++)
+
+	for (int j = 0; j < numTest; j++)
 	{	
 		durate=confrontoSingoloTempi(lunghezze, dimCampione, errMassimo, numLettere, tipoGeneratore);
 		for (int i = 0; i < dimCampione ; i++)
@@ -279,7 +276,7 @@ void testTempi(){
 	}
 	
 	//cout<<"\nRisultati:\n";
-	fout.open("times.csv");
+	fout.open("results.csv");
 	for (int i = 0; i < dimCampione ; i++)
 	{	
 		mediaSmart[i]=(double)mediaSmart[i]/numTest;
