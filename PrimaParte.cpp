@@ -5,11 +5,11 @@
 #include <time.h>
 #include <string>
 #include <vector>
+#include<fstream>
 
 using namespace std; 
 using namespace std::chrono; 
 
-//TODO: fare generatore stringhe caso pessimo per caso naive
 
 //generatore stringhe
 // 2<= numeroDiLettere <= 26
@@ -122,13 +122,12 @@ double misuraDurata(int(*func)(string), string stringa, double erroreMassimo){
 		(*func)(stringa);
 		tempoDurata = durata(start, steady_clock::now());
 		misurazioni++;
-	}while(tempoDurata < tempoMinimo);
+	} while(tempoDurata < tempoMinimo);
 
 	return tempoDurata/misurazioni;
 }
 
 
-//test
 template<typename T>
 void sommaVettori(vector<T> &a, vector<T> &b){
 	for (int i = 0; i < a.size(); i++)
@@ -138,9 +137,10 @@ void sommaVettori(vector<T> &a, vector<T> &b){
 }
 
 void testDistribuzione(){
+	ofstream fout;
 	srand(time(0));
 
-	int s=1, numTest=5, lunghezzaStringa=100, dimCampione=1000000, numLettere=3;
+	int s=1, numTest=20, lunghezzaStringa=100, dimCampione=1000000, numLettere=3;
 	string tipoGeneratore="b";
 	vector<int> freqAssoluta, aux;
 
@@ -185,12 +185,13 @@ void testDistribuzione(){
 	}
 	
 	
-	cout<<"\nRisultati:\n"; //risultati in frequenze assolute
+	//cout<<"\nRisultati:\n"; //risultati in frequenze assolute
+	fout.open("distribution.csv");
 	for (int i = 1; i < freqAssoluta.size() ; i++)
 	{	
 		media[i]=(double)media[i]/numTest;
 		varianza[i]=((double)varianza[i]/numTest)-pow(media[i],2);
-		cout<<i<<" "<<(double)media[i]<<" "<<varianza[i]<<endl;
+		fout<<i<<" "<<(double)media[i]<<" "<<varianza[i]<<endl;
 	}
 
 }
@@ -212,7 +213,8 @@ vector<double> confrontoSingoloTempi(vector<int> lunghezze, int dimensioneCampio
 
 void testTempi(){
 	srand(time(0));
-	int s=1, numTest=5, lunghezzaMIN = 1000, lunghezzaMAX = 500000, dimCampione = 100, numLettere=3;
+	ofstream fout;
+	int s=1, numTest=20, lunghezzaMIN = 1000, lunghezzaMAX = 500000, dimCampione = 100, numLettere=3;
 	double errMassimo = 0.001;
 	string stringa, tipoGeneratore="b";
 	vector<double>  durate;//posizioni indici: pari = periodoSmart, dispari = periodoNaive
@@ -276,14 +278,15 @@ void testTempi(){
 		}
 	}
 	
-	cout<<"\nRisultati:\n";
+	//cout<<"\nRisultati:\n";
+	fout.open("times.csv");
 	for (int i = 0; i < dimCampione ; i++)
 	{	
 		mediaSmart[i]=(double)mediaSmart[i]/numTest;
 		mediaNaive[i]=(double)mediaNaive[i]/numTest;
 		varianzaSmart[i]=((double)varianzaSmart[i]/numTest)-pow(mediaSmart[i],2);
 		varianzaNaive[i]=((double)varianzaNaive[i]/numTest)-pow(mediaNaive[i],2);
-		cout<<lunghezze[i]<<" "<<mediaSmart[i]<<" "<<mediaNaive[i]<<" "<<varianzaSmart[i]<<" "<<varianzaNaive[i]<<endl;
+		fout<<lunghezze[i]<<" "<<mediaSmart[i]<<" "<<mediaNaive[i]<<" "<<varianzaSmart[i]<<" "<<varianzaNaive[i]<<endl;
 	}
 }
 
