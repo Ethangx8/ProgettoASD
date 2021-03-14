@@ -172,12 +172,6 @@ void testDistribuzione(){
 	
 	vector<double> media(lunghezzaStringa+1, 0),varianza(lunghezzaStringa+1, 0);
 	cout<<"\nTest in esecuzione...\n";
-	/*freqAssoluta = distribuzionePeriodo(lunghezzaStringa, dimCampione,tipoGeneratore, numLettere);
-	for (int i = 1; i < freqAssoluta.size(); i++)
-	{
-		media[i]+=freqAssoluta[i];
-		varianza[i]+=pow(freqAssoluta[i],2);
-	}*/
 	for (int j = 0; j < numTest; j++)
 	{
 		freqAssoluta=distribuzionePeriodo(lunghezzaStringa, dimCampione,tipoGeneratore, numLettere);
